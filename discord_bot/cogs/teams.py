@@ -43,7 +43,7 @@ class Teams(commands.Cog):
       conn.close()
 
     @commands.command(name='doteammake',help='doteammake')
-    @commands.has_permissions(manage_roles=True)
+    @commands.has_permissions(administrator=True)
     async def dbahxx(self, ctx, *args):
       conn = psycopg2.connect(database = DB_NAME, user = USER_NAME, password = PASSWORD, host = "127.0.0.1", port = "5432")
 
@@ -75,6 +75,26 @@ class Teams(commands.Cog):
       except (Exception, psycopg2.DatabaseError) as error:
           print(error)
 
+    @commands.command(name='doteamclose',help='doteammake')
+    @commands.has_permissions(administrator=True)
+    async def dbahxxy(self, ctx, *args):
+      try:
+          channels = ctx.channel.category.text_channels
+          for channel in channels:
+              await channel.send("Note: this channel will be deleted this weekend. Please save any resources you wish to keep before the end of the day.")
+      except (Exception) as error:
+          print(error)
+
+    @commands.command(name='doteampermsclose',help='doteammake')
+    @commands.has_permissions(administrator=True)
+    async def dbahxxy(self, ctx, *args):
+      try:
+          channels = ctx.channel.category.text_channels
+          for channel in channels:
+              await channel.edit(sync_permissions=True)
+              await channel.send("Note: this channel's settings are now synced")
+      except (Exception) as error:
+          print(error)
 
 # Loads the cog
 def setup(bot):
